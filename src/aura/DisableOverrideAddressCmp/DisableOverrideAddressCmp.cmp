@@ -1,0 +1,28 @@
+<!--
+ - Created by jschultz on 6/6/17.
+ -->
+
+<aura:component description="Component to disable the manual address override" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global" controller="OverrideAddressController">
+	<aura:attribute name="recordId" access="global" type="String" default="" description="ID of the current contact" />
+	<aura:attribute name="hasError" access="private" type="Boolean" default="false" description="Toggles error notification." />
+	<aura:attribute name="errorMsg" access="private" type="String" default="" description="Error message." />
+
+	<aura:handler name="init" value="{!this}" action="{!c.handleInit}" />
+
+	<div class="slds">
+		<div class="slds-page-header" role="banner">
+			<h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-left" title="Modal title">Disable Address Override</h1>
+		</div>
+
+		<aura:if isTrue="{!v.hasError}">
+			<ui:message title="Error" severity="error" closable="false">
+				{!v.errorMsg}
+			</ui:message>
+		</aura:if>
+
+		<aura:if isTrue="{! not(v.hasError)}">
+			<lightning:spinner variant="brand" size="large" />
+		</aura:if>
+	</div>
+
+</aura:component>

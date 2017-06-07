@@ -1,0 +1,27 @@
+<!--
+ - Created by jschultz on 6/6/17.
+ -->
+
+<aura:component description="Component for displaying individual addresses in override modal." controller="OverrideAddressController" access="global">
+
+	<aura:attribute name="address" access="global" type="Seasonal_Address__c" default="" description="Individual seasonal address" />
+
+	<tr onclick="{!c.handleClick}" data-id="{!v.address.Id}">
+		<td data-label="Current Address?">
+			<aura:if isTrue="{!v.address.Current_Address__c}">
+				<lightning:icon iconName="action:approval" size="x-small" alternativeText="Indicates the address is the current address on the contact" />
+			</aura:if>
+		</td>
+		<td data-label="Address">
+			<p><ui:outputRichText value="{!v.address.Street__c}" /></p>
+			<p><ui:outputRichText value="{!v.address.City__c + ', ' + v.address.State__c + ' ' + v.address.Postal_Code__c}" /></p>
+			<p><ui:outputRichText value="{!v.address.Country__c}" /></p>
+		</td>
+		<td data-label="Marked Invalid">
+			<aura:if isTrue="{!v.address.Invalid__c}">
+				<lightning:icon iconName="utility:warning" variant="error" size="x-small" alternativeText="Indicates the address is marked invalid" />
+			</aura:if>
+		</td>
+	</tr>
+
+</aura:component>

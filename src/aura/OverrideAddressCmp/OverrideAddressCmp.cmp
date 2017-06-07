@@ -1,0 +1,43 @@
+<!--
+ - Created by jschultz on 6/6/17.
+ -->
+
+<aura:component description="Override the in-season address with an address from the list." implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global" controller="OverrideAddressController">
+	<aura:attribute name="recordId" access="global" type="String" default="" description="ID of the current contact" />
+	<aura:attribute name="addresses" access="private" type="Seasonal_Address__c[]" default="" description="Collection of seasonal addresses related to the current contact." />
+	<aura:attribute name="hasError" access="private" type="Boolean" default="false" description="Toggles error notification." />
+	<aura:attribute name="errorMsg" access="private" type="String" default="" description="Error message." />
+
+	<aura:handler name="init" value="{!this}" action="{!c.handleInit}" />
+
+	<div class="slds">
+		<div class="slds-page-header" role="banner">
+			<h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-left" title="Modal title">Choose an Address</h1>
+			<p class="slds-text-heading--small">Click on an address below to manually override the date range and set as the contact&rsquo;s mailing address.</p>
+		</div>
+
+		<aura:if isTrue="{!v.hasError}">
+			<ui:message title="Error" severity="error" closable="true">
+				{!v.errorMsg}
+			</ui:message>
+		</aura:if>
+
+		<aura:if isTrue="{!v.addresses.length}">
+			<table class="slds-table slds-table--cell-buffer slds-table--bordered">
+				<thead>
+					<tr class="slds-text-title--caps">
+						<th scope="col">Current?</th>
+						<th scope="col" width="50%">Address</th>
+						<th scope="col">Marked Invalid?</th>
+					</tr>
+				</thead>
+				<tbody>
+					<aura:iteration var="a" items="{!v.addresses}">
+						<c:OverrideAddressLineCmp address="{!a}" />
+					</aura:iteration>
+				</tbody>
+			</table>
+		</aura:if>
+	</div>
+
+</aura:component>
